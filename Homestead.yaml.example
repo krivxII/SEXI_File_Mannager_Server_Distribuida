@@ -1,0 +1,69 @@
+ip: 192.168.10.10
+memory: 2048
+cpus: 2
+provider: virtualbox
+authorize: ~/.ssh/id_rsa.pub
+keys:
+    - ~/.ssh/id_rsa
+folders:
+    -
+        map: 'D:\Directorios\Escritorio\SEXI_File_Mannager_Server_Distribuida\SEXI_File_Mannager_Server_Distribuida'
+        to: /home/vagrant/code
+sites:
+    -
+        map: homestead.test
+        to: /home/vagrant/code/public
+databases:
+    - homestead
+features:
+    -
+        mariadb: false
+    -
+        ohmyzsh: false
+    -
+        webdriver: false
+name: sexi-file-mannager-server-distribuida
+hostname: sexi-file-mannager-server-distribuida
+
+#
+
+
+---
+ip: "192.168.10.10"
+memory: 2048
+cpus: 2
+provider: virtualbox
+
+authorize: d:/Directorios/Escritorio/servidor/.ssh/id_rsa.pub
+
+keys:
+    - d:/Directorios/Escritorio/servidor/.ssh/id_rsa
+
+folders:
+    - map: D:/Programas/xammp/htdocs/File_Mannager_Server_Eda
+      to: /home/vagrant/code
+
+sites:
+    - map: homestead.test
+      to: /home/vagrant/code/public
+
+databases:
+    - homestead
+
+
+networks:
+    - type: "public_network"
+      ip: "192.168.1.20"
+      bridge: "Realtek RTL8822BE 802.11ac PCIe Adapter"
+      
+features:
+    - mariadb: false
+    - ohmyzsh: false
+    - webdriver: false
+
+# ports:
+#     - send: 50000
+#       to: 5000
+#     - send: 7777
+#       to: 777
+#       protocol: udp
