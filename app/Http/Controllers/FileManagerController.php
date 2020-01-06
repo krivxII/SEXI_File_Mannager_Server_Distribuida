@@ -16,6 +16,7 @@ class FileManagerController extends Controller
    */
   public function __invoke(Request $request)
   {
+   // dd($request->all());
 if(!$request->has("name")){
   return response("Missing Name",400);
 }
@@ -26,7 +27,7 @@ if(!$request->has("name")){
       $recursive = false; // Get subdirectories also?
       $contents = collect( Storage::disk('google')->listContents($dir, $recursive));
       $dir = $contents->where('type', '=', 'dir')
-          ->where('filename', '=', $request->input('name'))
+          ->where('name', '=', $request->input('name'))
           ->first(); // There could be duplicate directory names!
       if ( ! $dir) 
       {
@@ -35,7 +36,9 @@ if(!$request->has("name")){
         $dir = $contents->where('type', '=', 'dir')
             ->where('filename', '=', $request->input('name'))
             ->first(); // There could be duplicate directory names!
-        Storage::disk('google')->putFileAs($dir['path'], $request->file('archivo'), $request->file('archivo')->getClientOriginalName());
+           
+         // dd(  $contents);
+            Storage::disk('google')->putFileAs($dir['path'], $request->file('archivo'), $request->file('archivo')->getClientOriginalName());
        dd('created an sabe');
       } 
       Storage::disk('google')->putFileAs($dir['path'], $request->file('archivo'), $request->file('archivo')->getClientOriginalName());
@@ -66,7 +69,7 @@ if(!$request->has("name")){
     } 
     catch (Exception $e) 
     {
-      dd("dammmm");
+      dd($e);
       $path = Storage::disk('local')->putFileAs('archivos', $request->file('archivo'), $request->file('archivo')->getClientOriginalName());
       return "No se pudo comunicar con drive, fue guardado en la carpeta del servidor";
     }
